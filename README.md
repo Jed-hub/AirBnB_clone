@@ -32,6 +32,14 @@ In our case, we want to be able to manage the objects of our project:
 
 ### How to start it
 
+Up to come...
+
+
 ### How to use it
+
+Up to come...
 	
+
 ### Examples
+
+Up to comme ...
