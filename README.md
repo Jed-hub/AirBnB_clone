@@ -8,13 +8,15 @@ Welcome to the AirBnB clone project
 
 ## Description of the project
 
-   The AirBnB clone project is a simple copy of the AirBnB website. 
+The AirBnB clone project is a simple copy of the AirBnB website. 
+Our website will allow us to create and retrieve an object 
+and also do operations on those objects and finally destroy them.
 
   
 
 ## Description of the command interpreter
 
-   The command interpreter is like the Shell but limited to a specific use-case.
+The command interpreter is like the Shell but limited to a specific use-case.
 In our case, we want to be able to manage the objects of our project:
 
 	- Create a new object (ex: a new User or a new Place)
