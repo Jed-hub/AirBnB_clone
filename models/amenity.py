@@ -3,7 +3,12 @@
 Amenity module
 """
 
+
 class Amenity(BaseModel):
     """
-    Description
+    Description: Amenity
+
+    Attribute:
+        name: the name of the amenity (string)
     """
+    name = ''

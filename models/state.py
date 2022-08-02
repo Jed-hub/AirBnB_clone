@@ -3,7 +3,13 @@
 State module
 """
 
+
 class State(BaseModel):
     """
-    Description
+    Description: creates the state
+
+    Attribute:
+        name: the name of the state
     """
+
+    name = ''

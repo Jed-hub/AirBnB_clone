@@ -3,7 +3,14 @@
 City module
 """
 
+
 class City(BaseModel):
     """
-    Description
+    Description: The city
+
+    Attributes:
+        state_id: the state id (string)
+        name: the name of the city (string)
     """
+    state_id = ''
+    name = ''
