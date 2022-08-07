@@ -37,10 +37,6 @@ class BaseModel:
             self.updated_at = self.created_at
             models.storage.new(self)
 
-        #key = self.__class__.__name__ + '.' + self.id
-        #if not storage._FileStorage__objects.get(key):
-         #   storage.new(self)
-
     def __str__(self):
         """
         prints the class name and it's content
@@ -56,7 +52,6 @@ class BaseModel:
         """
         self.updated_at = datetime.now()
         models.storage.save()
-        #storage.save()
 
     def to_dict(self):
         """
