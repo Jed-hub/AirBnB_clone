@@ -5,6 +5,7 @@ import cmd
     This module desing the console specs
 """
 
+
 class HBNBCommand(cmd.Cmd):
     """
         This class provides the full functionnality of the console
@@ -20,6 +21,7 @@ class HBNBCommand(cmd.Cmd):
     def do_EOF(self, arg):
         """CTRL-D command to exit the program"""
         return True
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
