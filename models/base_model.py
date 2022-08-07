@@ -4,6 +4,7 @@ The base module
 """
 import uuid
 from datetime import datetime
+from . import storage
 
 
 class BaseModel:
@@ -35,6 +36,10 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = self.created_at
 
+        key = self.__class__.__name__ + '.' + self.id
+        if not storage._FileStorage__objects.get(key):
+            storage.new(self)
+
     def __str__(self):
         """
         prints the class name and it's content
@@ -49,6 +54,7 @@ class BaseModel:
         with the current datetime
         """
         self.updated_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
         """
