@@ -2,8 +2,9 @@
 """
 The base module
 """
-import uuid
+
 from datetime import datetime
+import uuid
 import models
 
 
@@ -26,11 +27,12 @@ class BaseModel:
         Initialization of the instances
         """
         if kwargs:
-            for key, value in kwargs.items():
-                if key != '__class__':
-                    setattr(self, key, value)
-                if key in ('created_at', 'updated_at'):
+            for arg, value in kwargs.items():
+                if arg in ('created_at', 'updated_at'):
                     value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+
+                if arg != '__class__':
+                    setattr(self, arg, value)
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
