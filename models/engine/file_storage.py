@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
+
+
 import json
 """ A module containing a single class for serialisation/deserialisation
     Class: FileStorage
 """
+
+
 class FileStorage:
     """ Serialiser/deserialiser
         -Args:
@@ -24,7 +28,7 @@ class FileStorage:
         return self.__objects
 
     def new(self, obj):
-        """ Creating new object by adding it to the list of objects 
+        """ Creating new object by adding it to the list of objects
             Args:
                 -obj: The object to create
         """
@@ -34,7 +38,7 @@ class FileStorage:
     def save(self):
         """ Saving obj to a file """
         with open(self.__file_path, "w") as wr:
-                json.dump(self.__objects, wr)
+            json.dump(self.__objects, wr)
 
     def reload(self):
         """ Get the json data """
