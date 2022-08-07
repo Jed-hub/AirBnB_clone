@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*
 """
 The base module
 """
-
-from datetime import datetime
 import uuid
-import models
+from datetime import datetime
+from . import storage
 
 
 class BaseModel:
     """
     Description: Defines all common attributes/methods
     for other classes
-
     Attributes:
         id: a string with an UUID when an instance is created
         created_at: assign with the current datetime
@@ -29,24 +26,18 @@ class BaseModel:
         """
         if kwargs:
             for key, value in kwargs.items():
-                if key == '__class__':
-                    continue
-                elif key == 'updated_at':
-                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
-                elif key == 'created_at':
-                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
-                if 'id' not in kwargs.keys():
-                    self.id = str(uuid4())
-                if 'created_at' not in kwargs.keys():
-                    self.created_at = datetime.now()
-                if 'updated_at' not in kwargs.keys():
-                    self.updated_at = datetime.now()
-                setattr(self, key, value)
+                if key != '__class__':
+                    setattr(self, key, value)
+                if key in ('created_at', 'updated_at'):
+                    value = datetime
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = self.created_at
-            models.storage.new(self)
+
+        key = self.__class__.__name__ + '.' + self.id
+        if not storage._FileStorage__objects.get(key):
+            storage.new(self)
 
     def __str__(self):
         """
@@ -62,7 +53,7 @@ class BaseModel:
         with the current datetime
         """
         self.updated_at = datetime.now()
-        models.storage.save()
+        storage.save()
 
     def to_dict(self):
         """
