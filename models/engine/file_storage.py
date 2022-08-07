@@ -1,51 +1,62 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 
+"""
+This module is in charge of the storage of the
+classes and their management.
+"""
 
 import json
-""" A module containing a single class for serialisation/deserialisation
-    Class: FileStorage
-"""
+from models.amenity import Amenity
+from models.base_model import BaseModel
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
+from os import path
 
 
 class FileStorage:
-    """ Serialiser/deserialiser
-        -Args:
-            -__file_path: The path to JSON file
-            -__objects: The dictionary representation of the obj
-        -Methods:
-            -all(self): Get all the objects
-            -new(self): set in __objects the obj
-            -save(self): serialises __objects to JSON
-            -reload(self): deserialises JSON to __objects
+    """File Storage Class
+    This is the File Storage module.
+    Attributes:
+        __file_path (str): This is the path of the JSON file in which
+            the contents of the `__objects` variable will be stored.
+        __objects (dict): This store all the instances data
     """
-    def __init__(self):
-        """ Class constructor """
-        self.__file_path = "file.json"
-        self.__objects = {}
+    __file_path = 'objects.json'
+    __objects = {}
 
     def all(self):
-        """ Geting all the objects of the class """
+        """Gets the __objects info
+        Returns the content of the `__objects` class attribute.
+        """
         return self.__objects
 
     def new(self, obj):
-        """ Creating new object by adding it to the list of objects
-            Args:
-                -obj: The object to create
+        """Saves a new object in the `__objects` class attribute
+        Args:
+            obj (inst): The object to adds in the `__objects` class attribute
+        Sets in the `__objects` class attribute the instance data
+        with a key as <obj class name>.id.
         """
         key = obj.__class__.__name__ + '.' + obj.id
-        self.__objects[key] = obj.to_dict()
+        self.__objects[key] = obj
 
     def save(self):
-        """ Saving obj to a file """
-        with open(self.__file_path, "w") as wr:
-            json.dump(self.__objects, wr)
+        """Serializes the content of `__objects` class attribute
+        """
+        json_dict = {}
+        for k, v in self.__objects.items():
+            json_dict[k] = v.to_dict()
+        with open(self.__file_path, mode='w', encoding='utf-8') as f:
+            f.write(json.dumps(json_dict))
 
     def reload(self):
-        """ Get the json data """
-        data = ""
-        try:
-            data = open(self.__file_path, "r")
-            self.__objects = json.load(data)
-            data.close()
-        except IOError:
-            pass
+        """Deserializes the JSON file in `__file_path` class attribute
+        """
+        if path.exists(self.__file_path):
+            with open(self.__file_path, mode='r', encoding='utf-8') as f:
+                json_dict = json.loads(f.read())
+                for k, v in json_dict.items():
+                    self.__objects[k] = eval(v['__class__'])(**v)
