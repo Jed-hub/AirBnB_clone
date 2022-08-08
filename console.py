@@ -13,7 +13,7 @@ class HBNBCommand(cmd.Cmd):
         This class provides the full functionnality of the console
         List of commands:
             -create : To create a new instance of BaseModel
-            
+
             -show: Prints the string representation of an instance
 
             -destroy: Deletes an instance
@@ -47,17 +47,17 @@ class HBNBCommand(cmd.Cmd):
         elif n_args == 2:
             model, obj_id = [value for value in arg.split()]
             if model == "BaseModel":
-                    obj = [v for v in storage.all().values() if v.id == obj_id]
-                    if obj:
-                        print("{}".format(obj[0]))
-                    else:
-                        print("** no instance found **")
+                obj = [v for v in storage.all().values() if v.id == obj_id]
+                if obj:
+                    print("{}".format(obj[0]))
+                else:
+                    print("** no instance found **")
             else:
                 print("** class doesn't exist **")
 
         else:
             print("** class name missing **")
-        
+
     def do_all(self, arg):
         """Pring all string representation of all instances"""
         objs = storage.all()
@@ -69,7 +69,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class doesn't exist")
 
-
     def do_quit(self, arg):
         'Quit command to exit the program'
         quit()
@@ -78,6 +77,7 @@ class HBNBCommand(cmd.Cmd):
     def do_EOF(self, arg):
         """CTRL-D command to quit the shell"""
         return True
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

@@ -4,6 +4,8 @@ from models.base_model import BaseModel
 """ A module containing a single class for serialisation/deserialisation
     Class: FileStorage
 """
+
+
 class FileStorage:
     """ Serialiser/deserialiser
         -Args:
@@ -25,7 +27,7 @@ class FileStorage:
         return self.__objects
 
     def new(self, obj):
-        """ Creating new object by adding it to the list of objects 
+        """ Creating new object by adding it to the list of objects
             Args:
                 -obj: The object to create
         """
@@ -35,11 +37,11 @@ class FileStorage:
     def save(self):
         """ Saving obj to a file """
         obj_dict = {}
-        for k,v in self.__objects.items():
+        for k, v in self.__objects.items():
             obj_dict[k] = v.to_dict()
 
         with open(self.__file_path, "w") as wr:
-                json.dump(obj_dict, wr)
+            json.dump(obj_dict, wr)
 
     def reload(self):
         """ Get the json data """
@@ -47,7 +49,7 @@ class FileStorage:
         try:
             data = open(self.__file_path, "r")
             obj_dict = json.load(data)
-            for k,v in obj_dict.items():
+            for k, v in obj_dict.items():
                 obj = BaseModel(**v)
                 self.__objects[k] = obj
             data.close()
