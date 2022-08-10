@@ -4,7 +4,7 @@ The base module
 """
 import uuid
 from datetime import datetime
-from . import storage
+import models
 
 
 class BaseModel:
@@ -27,17 +27,19 @@ class BaseModel:
         if kwargs:
             for key, value in kwargs.items():
                 if key != '__class__':
+                    if key in ('created_at', 'updated_at'):
+                        #value = datetime
+                        json_date = value
+                        value = datetime.fromisoformat(json_date)
                     setattr(self, key, value)
-                if key in ('created_at', 'updated_at'):
-                    value = datetime
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = self.created_at
 
         key = self.__class__.__name__ + '.' + self.id
-        if not storage._FileStorage__objects.get(key):
-            storage.new(self)
+        if not models.storage._FileStorage__objects.get(key):
+            models.storage.new(self)
 
     def __str__(self):
         """
@@ -53,7 +55,7 @@ class BaseModel:
         with the current datetime
         """
         self.updated_at = datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
         """
